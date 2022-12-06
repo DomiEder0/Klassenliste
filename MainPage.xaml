@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Klassenliste.ViewModels"
+             x:DataType="viewmodels:MainViewModel"
+             xmlns:models="clr-namespace:Klassenliste.Models"
+             x:Class="Klassenliste.MainPage">
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*,Auto,Auto">
+            <Label Text="Wählen Sie einen zufälligen Studierenden aus." 
+                   TextColor="{DynamicResource Primary}"
+                   FontSize="25" Margin="10" />
+
+            <CollectionView Grid.Row="1" 
+                            ItemsSource="{Binding Students}">
+                <CollectionView.EmptyView>
+                    <Label Text="Kein/e Schüler/Schülerin vorhanden." />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Student">
+                        <Grid ColumnDefinitions="150,*">
+                            <Image MinimumHeightRequest="150" 
+                                   Source="{Binding ProfilePhoto}" />
+
+                            <StackLayout Grid.Column="1">
+                                <Label Text="{Binding DisplayName}" 
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Age}" />
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <Button Text="Auswahl" Grid.Row="2" 
+                    Command="{Binding SelectStudentCommand}" />
+            <StackLayout Grid.Row="3" 
+                         HorizontalOptions="Center">
+                <Label FontSize="40" Margin="10"
+                   TextColor="{DynamicResource Secondary}" 
+                    Text="{Binding Student.DisplayName}" />
+                <Label FontAttributes="Bold" Text="{Binding Student.Age, StringFormat='{0} Jahre alt'}" />
+                <Image MinimumHeightRequest="150" Source="{Binding Student.ProfilePhoto}" />
+            </StackLayout>
+            
+        </Grid>
+    </ScrollView>
+</ContentPage>
